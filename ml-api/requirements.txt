@@ -1,0 +1,7 @@
+Flask
+python-dotenv
+torch
+torchvision
+timm
+Pillow
+google-generativeai
