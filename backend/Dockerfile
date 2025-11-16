@@ -4,17 +4,10 @@ FROM node:18-alpine
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to leverage Docker cache
+# Copy package.json and install dependencies
+# This is done so we don't have to run npm install every time we start
 COPY package*.json ./
+RUN npm install --no-warnings
 
-# Install app dependencies
-RUN npm install
-
-# Copy the rest of the application code
-COPY . .
-
-# Your app binds to port 5001, so expose it
-EXPOSE 5001
-
-# Define the command to run your app
-CMD [ "node", "server.js" ]
+# The command will be provided by docker-compose
+CMD [ "npm", "run", "dev" ]

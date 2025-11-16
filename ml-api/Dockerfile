@@ -1,21 +1,11 @@
-# Use an official Python runtime as a parent image
-FROM python:3.10-slim
+# Use the same base Python version as your Conda environment
+FROM python:3.13-slim
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy the requirements file
+# Install only the web server libraries. ML libs will be mounted.
 COPY requirements.txt ./
+RUN pip install --no-cache-dir Flask python-dotenv gunicorn requests google-generativeai
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt && \
-    pip install gunicorn
-    
-# Copy the rest of the application code
-COPY . .
-
-# Expose the port the app runs on
-EXPOSE 5002
-
-# Run the app using gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:5002", "app:app"]
+# The command to run the dev server will be provided by docker-compose
+CMD ["python", "app.py"]
