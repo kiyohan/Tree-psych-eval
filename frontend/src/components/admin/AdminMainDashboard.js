@@ -21,6 +21,22 @@ function AdminMainDashboard({ setView }) {
     fetchData();
   }, []);
 
+  // Export system data handler
+  const handleExportSystemData = async () => {
+    try {
+      const response = await api.exportSystemData();
+      const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/json' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'system_data.json');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      alert('Failed to export system data.');
+    }
+  };
+
   return (
     <div className="admin-card">
       <h3>Admin Dashboard</h3>
@@ -50,7 +66,7 @@ function AdminMainDashboard({ setView }) {
       <div className="management-buttons">
         <button className="btn-manage-main" onClick={() => setView('users')}>Manage User Accounts</button>
         <button className="btn-manage-main" onClick={() => setView('cases')}>Case Audit & Reassignment</button>
-        <button className="btn-manage-secondary" onClick={() => alert('Feature not implemented yet.')}>Export System Data</button>
+        <button className="btn-manage-secondary" onClick={handleExportSystemData}>Export System Data</button>
       </div>
 
       <h4 className="text-secondary fw-normal mt-4">Recent System Activity Log</h4>
