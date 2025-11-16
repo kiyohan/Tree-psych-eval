@@ -6,3 +6,5 @@ timm
 Pillow
 google-generativeai
 gunicorn
+numpy
+opencv-python

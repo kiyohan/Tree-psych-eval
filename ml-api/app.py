@@ -9,6 +9,9 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 import requests
 from io import BytesIO
+import cv2
+import numpy as np
+
 
 # --- 1. INITIAL SETUP & CONFIGURATION ---
 
@@ -236,6 +239,67 @@ if gemini_model is not None:
     except Exception as e:
         print(f"Failed to build vector store at startup: {e}")
 
+# --- (This can go after your RAG functions, before the Flask endpoint) ---
+
+def analyze_size_and_placement(pil_image):
+    """
+    Analyzes a drawing's size and placement from a PIL Image object
+    and returns them as a list of labels.
+    """
+    try:
+        # Convert PIL Image to an OpenCV image (NumPy array)
+        # PIL is RGB, OpenCV is BGR, so we convert color space
+        image = cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
+
+        if image is None: return []
+
+        image_height, image_width = image.shape[:2]
+        image_area = image_width * image_height
+        
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        # This threshold assumes a light background (like white paper)
+        _, thresh = cv2.threshold(gray, 240, 255, cv2.THRESH_BINARY_INV)
+        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        geometric_labels = []
+        if contours:
+            largest_contour = max(contours, key=cv2.contourArea)
+            x, y, w, h = cv2.boundingRect(largest_contour)
+            
+            size_ratio = (w * h) / image_area
+            # You can tune these thresholds if needed
+            if size_ratio >= 0.50: geometric_labels.append("SIZE: Large")
+            elif size_ratio < 0.20: geometric_labels.append("SIZE: Small")
+
+            center_x, center_y = x + w / 2, y + h / 2
+            
+            # Using thirds is a good approach for placement
+            is_top = center_y < image_height / 3
+            is_bottom = center_y > image_height * 2 / 3
+            is_left = center_x < image_width / 3
+            is_right = center_x > image_width * 2 / 3
+            
+            # Handle the special case of Top-Left
+            if is_top and is_left:
+                geometric_labels.append("PLACEMENT: Top-Left")
+            # Handle other cases
+            else:
+                if is_top: geometric_labels.append("PLACEMENT: Top")
+                elif is_bottom: geometric_labels.append("PLACEMENT: Bottom")
+                
+                if is_left: geometric_labels.append("PLACEMENT: Left")
+                elif is_right: geometric_labels.append("PLACEMENT: Right")
+
+            # Check for Center (if not in any other category)
+            is_vert_middle = not is_top and not is_bottom
+            is_horiz_center = not is_left and not is_right
+            if is_vert_middle and is_horiz_center:
+                geometric_labels.append("PLACEMENT: Center")
+                
+    except Exception as e:
+        print(f"🔥 Geometry analysis failed: {e}")
+        return []
+    return geometric_labels
 
 # --- 5. FLASK API ENDPOINT ---
 
@@ -268,6 +332,11 @@ def analyze_drawing_endpoint():
         preds = (probs > 0.5).cpu().numpy()[0]
 
     predicted_labels = [LABEL_NAMES[i] for i, pred in enumerate(preds) if pred == 1]
+
+    geometric_labels = analyze_size_and_placement(image)
+    print(f"Detected geometric features: {geometric_labels}")
+
+    predicted_labels.extend(geometric_labels)
 
     # --- STAGE 2: RAG RETRIEVAL ---
     is_flagged = len(predicted_labels) > 0

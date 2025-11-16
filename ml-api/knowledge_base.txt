@@ -1,0 +1,81 @@
+"""
+- ANIMAL PEEKING FROM HOLE IN TREE • Feeling that segment of personality is pathoformically free from control and presumably has destructive potentialities; obsessive guilt. • Children often identify with an animal, thus depicting regressive yearnings for withdrawn, warm, protecting uterine existence.
+- APPLE TREE • Frequently drawn by dependent children. • Pregnant women or those desiring children often draw apple trees.
+- APPLES, FALLING OR FALLEN • Indicates child's feeling of rejection.
+- BARK Depicted by vine-like vertical lines well separated • Suggests schizoid characteristics.
+- BARK Easily drawn • Well-balanced interaction.
+- BARK Inconsistently or heavily drawn • Anxiety.
+- BARK Meticulously drawn • Compulsiveness with overconcern about relationships with environment.
+- BRANCHES • Degree of flexibility of branches, number, size, and extent of interrelationship indicate view of adaptability and availability for deriving satisfactions in environment.
+- BRANCHES Absolute symmetry of • Implies feelings of ambivalence; inability to grant dominance to emotional or intellectual course of action.
+- BRANCHES Broken, bent, or dead • Significant psychic or physical trauma. • Castration feelings: psychosexual or psychosocial.
+- BRANCHES Indicated by shaded implication • When easily and quickly drawn, indicative of tactful but possibly superficial interaction.
+- BRANCHES Indicated by unshaded implication • Oppositional tendencies.
+- BRANCHES Intended to be two dimensional but not "closed" at distal end • Little control over expression of drives.
+- BRANCHES New growth protruding from barren trunk • Reversal of crippling belief that seeking satisfaction from environment was fruitless. • Probably sexual rejuvenation, if history of impotence exists.
+- BRANCHES One-dimensional, not forming a system and inadequately joined to a one-dimensional trunk • Organicity. • Impotence feelings, futility, lack of ego strength with poor integration of satisfaction-seeking resources.
+- BRANCHES One- or two-dimensional, turning inward • Strong intratensive ruminative tendencies.
+- BRANCHES Overemphasis to left • Personality imbalance due to tendency to seek strenuously for immediate, frank emotional satisfaction: extratensivity.
+- BRANCHES Overemphasis to right • Personality imbalance produced by strong tendency to avoid or delay emotional satisfaction, or seek satisfaction through intellectual effort.
+- BRANCHES Phallic-like • Sexual preoccupations. • Strivings for virility.
+- BRANCHES Spike-like • Subconscious castration fear. • Masochistic tendencies if point is at trunk end of branch.
+- BRANCHES Two-dimensional, drawn like clubs or fingers with little organization • Strong hostility and aggression. • If not overtly aggressive, hostility is repressed with considerable inner tension created.
+- BRANCHES Two-dimensional, partially drawn with relatively refined branch system and foliage by implication • Implies well-developed ability to deal successfully with people, as in social work.
+- BRANCHES "Wrapped" at ends in cloud-like balls • Inhibitions prevent outward discharge of aggression.
+- BRANCH STRUCTURE Abruptly flattened at top • Attempt to reject or deny painful fantasy life.
+- BRANCH STRUCTURE Overly large in relation to trunk • Feeling of basic inadequacy with concomitant overstriving to secure satisfaction from environment.
+- BRANCH STRUCTURE Tall and narrow • Tendency to fear seeking satisfaction from and in environment.
+- DETAILS, ESSENTIAL • Trunk and one branch may be regarded as normal when the drawing is identified as a stump.
+- GROUND, TRANSPARENCIY OF, ROOTS SHOWN BELOW SURFACE • Pathoformic reality flaw. • Suggestive of organicity.
+- GROUNDLINE, ARC-LIKE HILL • Tree upon crest of arc-like hill frequently represents oral-erotic fixation with need for maternal protection. • When Tree is small, maternal dependence with feelings of isolation and helplessness indicated.
+- LEAVES Fallen or falling • Feels losing ability to hide thoughts and feelings. • Feels losing ability for more controlled and delicate adjustments in and to environment.
+- LEAVES Many presented in detail • Obsessive-compulsive characteristics.
+- LEAVES Two-dimensional, too large for branches • Wishes to mask basic feelings of inadequacy with cloak of superficial adjustment. • Overcompensatory attempt to take flight into reality.
+- PERSPECTIVE Below subject • Defeatist attitude. • Tendency toward concretivity. • Rejection of person represented by Tree.
+- PERSPECTIVE Partly up a hill • Feelings of striving. • Need for shelter and security.
+- PERSPECTIVE Top of hill, by itself • Sometimes indicates feeling of superiority. • Sometimes represents feeling of isolation, concomitant with struggle for autonomy.
+- ROOTS Dead • Intrapersonal imbalance or dissolution with suggested pathoformic loss of drive and grasp of reality. • Obsessive-depressive feelings associated with early life.
+- ROOTS Entering ground, overemphasis upon • Great need to maintain grasp of reality. • Insecurity.
+- ROOTS Talon-like, not penetrating ground surface • Poor reality contact. • Paranoid aggressive attitudes suggested.
+- ROOTS Thin-lined, making tenuous contact with ground • Poor reality contact.
+- ROOTS Transparent from underground • Impairment of reality awareness. • Organicity, particularly in children.
+- SCARS • Psychic and/or physical experience regarded traumatically.
+- SHADOW • Anxiety-binding factor within conscious level of personality. • Unsatisfying relationship of psychological past with psychological present.
+- SUN Large • Acute awareness of relationship to authority figure.
+- SUN Location of • Relationship of Tree to source of warmth and/or power. • Frequently symbolizes relationship felt between the subject and dominant environmental figure.
+- SUN Setting • Feelings of depression.
+- TREE Drawn as two one-dimensional trees • Strongly suggests pathologic dichotomy of affect and intellect. • Organicity suspected.
+- TREE "Keyhole" • Strong hostile impulses. • Somewhat rigid personality, with much potential for explosive behavior.
+- TREE Large but contained within page • Acutely aware of self in environment. • Likely to attempt to secure satisfaction in activity rather than fantasy.
+- TREE Leaning to left • Imbalance of personality because of desire to secure frank, immediate, emotional satisfaction in behaving impulsively. • Fixation on past and/or fear of future.
+- TREE Leaning to right • Imbalance of personality due to fear of frank, emotional expression with concomitant overemphasis upon intellectual satisfactions. • Fixation on future and/or desire to forget unhappy past.
+- TREE "Phallic" • Common for children under 8 years. • Suggests psychosexual immaturity and/or phallic preoccupations.
+- TREE Small • Feels inferior and inadequate. • Desire to withdraw.
+- TRUNK Broad at base with rapid diminishing of breadth • Early environment lacking in warmth and healthful stimulation with resultant cramping effect on personality maturation.
+- TRUNK Broken and tip of tree touching ground • Symbolically expresses feeling of having been overwhelmed by internal or external forces beyond control.
+- TRUNK Dead • Feels crippling loss of ego control.
+- TRUNK Faint lines • Feeling of lack of ego strength, indecision and inadequacy, accompanied by anxiety.
+- TRUNK Large, with small branch structure • Precarious personality balance because of frustration engendered by inability to satisfy strong basic needs. • Emotional immaturity or egocentricity.
+- TRUNK Leaning to left and then to right • Tendency at early age to regress and behave impulsively and at later age to overcompensate by strong controls and fixation on future.
+- TRUNK Narrower at base than at higher points • Striving beyond the subject's strength with concomitant implications of possible collapse of ego control.
+- TRUNK One-dimensional, with one-dimensional branches that do not form a system • Organic state suspected. • Feelings of impotence, futility, and lack of ego strength.
+- TRUNK Overly large • Feelings of environmental constriction with tendency to react aggressively in reality or fantasy.
+- TRUNK Reinforcement of peripheral lines • Need to maintain control or personality intactness. • Employs compensatory defenses to cloak and combat fear of personality diffusion.
+- TRUNK Tiny • Feelings of basic inadequacy and ineptness.
+- TRUNK Truncated with tiny branches growing from stump • Core of self felt to be damaged. • Stunted growth with renewed efforts or hope for regrowth.
+- TRGUNK Two-dimensional, with one-dimensional branches • Good early development but later interference by serious traumatic events.
+- TRUNK Very slender, with large branch structures • Precarious personality balance because of over-striving for satisfaction.
+- WIND Blowing from ground level to tree-top • Compulsive need to escape reality and enter fantasy.
+- WIND Blowing from subject • Desire to deny feelings of pressure. • Desire to aggress against sources of frustration.
+- WIND Blowing from top to bottom • Compulsive need to escape fantasy and return to reality.
+- WIND Blowing from Tree toward subject • Narcissistic tendency; for example, wishes or feels control over person the Tree represents.
+- WIND Blowing in all directions simultaneously • Suggestive of acute reality testing failure.
+- SIZE: Large • A drawing occupying almost all of the available space. • Indicates a feeling of frustration, great tension, and irritability. • May also be a factor in an egocentric view of one's own importance.
+- SIZE: Small • An extremely small drawing. • Usually indicates a feeling of inadequacy and a tendency to withdraw from the environment.
+- PLACEMENT: Left • The drawing is placed to the left of the page's midpoint. • Indicates a tendency to behave impulsively and seek immediate, emotional satisfaction. • Suggests overconcern with the past and a primary focus on the self.
+- PLACEMENT: Right • The drawing is placed to the right of the page's midpoint. • Indicates stable, rigidly controlled behavior and a willingness to delay satisfaction. • Suggests a preference for intellectual over emotional satisfaction and overconcern about the future.
+- PLACEMENT: Bottom • The drawing is placed below the page's midpoint. • Indicates feelings of insecurity and inadequacy, creating a depression of mood. • Suggests a tendency to be concrete and seek satisfaction in reality rather than fantasy.
+- PLACEMENT: Top • The drawing is placed above the page's midpoint. • Indicates a feeling of striving for unobtainable goals. • Suggests a tendency to seek satisfaction in intellectualization or fantasy.
+- PLACEMENT: Center • The drawing is centered exactly on the geometric midpoint of the page. • Indicates rigidity in behavior used to compensate for anxiety and insecurity.
+- PLACEMENT: Top-Left • The drawing is placed in the upper left quadrant. • This is the "quadrant of regression," frequently used by deteriorated psychotic or organic individuals.
+"""
