@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # The Node.js Backend Service
+  backend:
+    build: ./backend  
+    container_name: backend # You can keep this or change it to 'backend'
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      MONGO_URI: "your_mongodb_atlas_connection_string"
+      JWT_SECRET: "a_very_strong_and_long_secret_key_for_jwt_docker"
+      CLOUDINARY_CLOUD_NAME: "your_cloudinary_cloud_name"
+      CLOUDINARY_API_KEY: "your_cloudinary_api_key"
+      CLOUDINARY_API_SECRET: "your_cloudinary_api_secret"
+      ML_API_ENDPOINT: "http://ml-api:5002/ml/analyze-drawing"
+    networks:
+      - dsi-network
+
+  # The Python ML API Service
+  ml-api:
+    build: ./ml-api
+    container_name: dsi_ml_api
+    restart: unless-stopped
+    ports:
+      - "5002:5002"
+    env_file:
+      - ./ml-api/.env
+    networks:
+      - dsi-network
+
+  # The React Frontend Service
+  frontend:
+    build: ./frontend
+    container_name: dsi_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - dsi-network
+
+networks:
+  dsi-network:
+    driver: bridge
