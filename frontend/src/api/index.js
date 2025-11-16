@@ -34,7 +34,11 @@ export const reassignCase = (caseId, newAssessorId) => API.put(`/admin/cases/${c
 export const createUser = (userData) => API.post('/users', userData);
 export const updateUser = (userId, userData) => API.put(`/users/${userId}`, userData);
 export const deleteUser = (userId) => API.delete(`/users/${userId}`);
+
 export const getAdminLogs = () => API.get('/admin/logs');
+
+// Admin - Export system data
+export const exportSystemData = () => API.get('/admin/export', { responseType: 'blob' });
 
 // Uploader - Get drawing history
 export const getMyDrawingsWithCases = () => API.get('/drawings'); // We need to update the backend for this

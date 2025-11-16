@@ -1,0 +1,38 @@
+# Node modules
+**/node_modules
+**/npm-debug.log
+
+# Python cache
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.Python
+
+# Environment files (will be passed via docker-compose)
+**/.env
+**/.env.local
+
+# Git
+**/.git
+**/.gitignore
+
+# IDE
+**/.vscode
+**/.idea
+
+# OS files
+**/.DS_Store
+**/Thumbs.db
+
+# Logs
+**/logs
+**/*.log
+
+# Build directories
+**/build
+**/dist
+
+# Test files
+**/*.test.js
+**/coverage

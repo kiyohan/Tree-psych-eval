@@ -1,11 +1,20 @@
-# Use the official Node.js image
+# Use Node.js LTS version
 FROM node:18-alpine
 
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and install dependencies
+# Copy package files
 COPY package*.json ./
-RUN npm install --no-warnings
 
-# The command to start the dev server will be provided by docker-compose
+# Install dependencies
+RUN npm install
+
+# Copy application files
+COPY . .
+
+# Expose the port the app runs on
+EXPOSE 3000
+
+# Start the application
 CMD ["npm", "start"]

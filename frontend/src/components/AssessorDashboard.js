@@ -129,32 +129,87 @@ function AssessorDashboard() {
     }
   };
 
+  const { logout } = require('../context/AuthContext').useAuth();
+
   return (
     <div className="assessor-container">
-      {loading && <p>Loading...</p>}
-      {!loading && view === 'welcome' && (
-        <div className="welcome-card text-center">
-            <img src={logoUrl} alt="Choice Foundation" className="foundation-logo" />
-            <h2>Welcome, Assessor</h2>
-            <p className="lead">Your ML-assisted HTP interpretation platform is ready. Review cases quickly and efficiently using the AI-generated analysis.</p>
-            <button className="btn btn-lg btn-info text-white mt-3" onClick={() => setView('dashboard')}>Start Reviewing Cases</button>
+      <header className="assessor-header">
+        <div className="header-left">
+          <img src={logoUrl} alt="Choice Foundation" className="assessor-logo" />
+          <div className="header-title">
+            <h2>HTP Analysis Platform</h2>
+            <span className="header-subtitle">Assessor Portal</span>
+          </div>
         </div>
-      )}
-      {!loading && view === 'dashboard' && <DashboardView cases={cases} onSelectCase={handleSelectCase} />}
+        <div className="header-right">
+          {view === 'review' && (
+            <button onClick={handleReturnToDashboard} className="btn-back">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+              </svg>
+              Back to Dashboard
+            </button>
+          )}
+          {view !== 'welcome' && view !== 'dashboard' && (
+            <button onClick={() => { setView('dashboard'); setSelectedCase(null); }} className="btn-home">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/>
+              </svg>
+              Dashboard
+            </button>
+          )}
+          <button onClick={logout} className="logout-button">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" fill="currentColor"/>
+            </svg>
+            Logout
+          </button>
+        </div>
+      </header>
       
-      {/* --- THIS IS THE KEY CHANGE --- */}
-      {!loading && view === 'review' && selectedCase && (
-        <ReviewView 
-            caseData={selectedCase} 
-            onSave={handleSaveReview} 
-            onBack={handleReturnToDashboard}
-            isSubmitting={isSubmitting}
-            // Add the isReadOnly prop based on the case's status
-            isReadOnly={selectedCase.status.startsWith('Completed')}
-        />
-      )}
-      {/* --- END OF CHANGE --- */}
+      <main className="assessor-main">
+        {loading && (
+          <div className="loading-state">
+            <div className="spinner-large"></div>
+            <p>Loading cases...</p>
+          </div>
+        )}
+        {!loading && view === 'welcome' && (
+          <div className="welcome-container">
+            <div className="welcome-header">
+              <div className="assessor-avatar">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/>
+                </svg>
+              </div>
+              <h1 className="welcome-title">Welcome, Assessor</h1>
+              <p className="welcome-subtitle">Your ML-assisted HTP interpretation platform is ready</p>
+            </div>
 
+            <div className="welcome-card" style={{maxWidth: '600px', margin: '0 auto', cursor: 'pointer'}} onClick={() => setView('dashboard')}>
+              <div className="card-icon" style={{background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)', margin: '0 auto 1.5rem'}}>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.89 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" fill="currentColor"/>
+                </svg>
+              </div>
+              <h3 style={{textAlign: 'center'}}>Start Reviewing Cases</h3>
+              <p style={{textAlign: 'center'}}>Review cases quickly and efficiently using AI-generated analysis</p>
+              <div className="card-action" style={{textAlign: 'center'}}>Access Caseload Dashboard →</div>
+            </div>
+          </div>
+        )}
+        {!loading && view === 'dashboard' && <DashboardView cases={cases} onSelectCase={handleSelectCase} />}
+        
+        {!loading && view === 'review' && selectedCase && (
+          <ReviewView 
+              caseData={selectedCase} 
+              onSave={handleSaveReview} 
+              onBack={handleReturnToDashboard}
+              isSubmitting={isSubmitting}
+              isReadOnly={selectedCase.status.startsWith('Completed')}
+          />
+        )}
+      </main>
     </div>
   );
 }

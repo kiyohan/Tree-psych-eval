@@ -50,43 +50,84 @@ function AdminCaseAudit({ setView }) {
         ), [cases, searchTerm]);
 
     return (
-        <div className="admin-card">
-            {/* Render the modal when a case is selected */}
+        <div className="dashboard-main">
             <CaseDetailModal caseData={selectedCase} onClose={() => setSelectedCase(null)} />
 
-            <a href="#!" className="back-link" onClick={() => setView('dashboard')}>&larr; Back to Dashboard</a>
-            <h3>Case Audit & Reassignment</h3>
-            
-            <div className="search-bar">{/*...search bar...*/}</div>
-            
-            <h4 className="text-secondary fw-normal">All Cases ({filteredCases.length})</h4>
-            {loading ? <p>Loading cases...</p> : (
-            <table className="admin-table table-hover"> {/* Add table-hover for better UX */}
-                <thead>
-                    <tr><th>CHILD ID</th><th>UPLOAD DATE</th><th>ASSIGNED TO</th><th>STATUS</th><th>ACTIONS</th></tr>
-                </thead>
-                <tbody>
-                    {filteredCases.map(c => (
-                        <tr key={c._id} onClick={() => setSelectedCase(c)} style={{ cursor: 'pointer' }}>
-                            <td>{c.drawing?.childId}</td>
-                            <td>{new Date(c.createdAt).toLocaleDateString()}</td>
-                            <td>{c.assessor?.username || 'Unassigned'}</td>
-                            <td>{c.status}</td>
-                            <td onClick={e => e.stopPropagation()}> {/* Stop click from bubbling up to the row */}
-                                <select 
-                                    className="form-select form-select-sm" 
-                                    defaultValue="" 
-                                    onChange={(e) => handleReassign(c._id, e.target.value)}
-                                >
-                                    <option value="" disabled>Reassign to...</option>
-                                    {assessors.map(a => <option key={a._id} value={a._id}>{a.username}</option>)}
-                                </select>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            )}
+            <div className="dashboard-header-section">
+                <h2 className="dashboard-title">Case Audit & Reassignment</h2>
+                <p className="dashboard-subtitle">Review, audit, and manage all assessment cases</p>
+            </div>
+
+            <div className="dashboard-section">
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem'}}>
+                    <h3 className="section-title" style={{margin: 0}}>All Cases ({filteredCases.length})</h3>
+                    <input 
+                        type="text" 
+                        placeholder="Search by Child ID, Assessor, or Status..." 
+                        className="search-input"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+                
+                {loading ? (
+                    <div className="loading-state">
+                        <div className="spinner-large"></div>
+                        <p>Loading cases...</p>
+                    </div>
+                ) : (
+                    <div className="modern-table-container">
+                        <table className="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>CHILD ID</th>
+                                    <th>UPLOAD DATE</th>
+                                    <th>ASSIGNED TO</th>
+                                    <th>STATUS</th>
+                                    <th>ACTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredCases.map(c => (
+                                    <tr key={c._id} onClick={() => setSelectedCase(c)} style={{ cursor: 'pointer' }}>
+                                        <td>
+                                            <span style={{fontWeight: '600', color: '#1e293b'}}>{c.drawing?.childId}</span>
+                                        </td>
+                                        <td>{new Date(c.createdAt).toLocaleDateString()}</td>
+                                        <td>
+                                            {c.assessor?.username ? (
+                                                <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                    <div style={{width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '0.75rem', fontWeight: '600'}}>
+                                                        {c.assessor.username.charAt(0).toUpperCase()}
+                                                    </div>
+                                                    {c.assessor.username}
+                                                </div>
+                                            ) : (
+                                                <span style={{color: '#94a3b8'}}>Unassigned</span>
+                                            )}
+                                        </td>
+                                        <td>
+                                            <span className={`status-badge ${c.status.toLowerCase().replace(/\s+/g, '-')}`}>
+                                                {c.status}
+                                            </span>
+                                        </td>
+                                        <td onClick={e => e.stopPropagation()}>
+                                            <select 
+                                                className="reassign-select" 
+                                                defaultValue="" 
+                                                onChange={(e) => handleReassign(c._id, e.target.value)}
+                                            >
+                                                <option value="" disabled>Reassign to...</option>
+                                                {assessors.map(a => <option key={a._id} value={a._id}>{a.username}</option>)}
+                                            </select>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

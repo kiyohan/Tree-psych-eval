@@ -1,0 +1,44 @@
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Docker
+docker-compose.override.yml
+
+# Node modules
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build outputs
+build/
+dist/
+
+# Temporary files
+*.tmp
+.cache/

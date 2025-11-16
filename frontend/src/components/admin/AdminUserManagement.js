@@ -104,44 +104,83 @@ function AdminUserManagement({ setView }) {
     };
     
     return (
-        <div className="admin-card">
+        <div className="dashboard-main">
             <CreateUserModal 
                 show={showCreateModal}
                 onClose={() => setShowCreateModal(false)}
                 onUserCreated={fetchUsers}
             />
-            <a href="#!" className="back-link" onClick={() => setView('dashboard')}>&larr; Back to Dashboard</a>
-            <h3>User Management</h3>
-            <button className="btn btn-primary my-3" onClick={() => setShowCreateModal(true)}>
-                Create New User Account
-            </button>
             
-            <h4 className="text-secondary fw-normal">System Users ({users.length})</h4>
-            {loading ? <p>Loading users...</p> : (
-            <table className="admin-table">
-                <thead>
-                    <tr><th>NAME</th><th>ROLE</th><th>STATUS</th><th>ACTIONS</th></tr>
-                </thead>
-                <tbody>
-                    {users.map(user => (
-                        <tr key={user._id}>
-                            <td>{user.username}</td>
-                            <td>{user.role}</td>
-                            <td>
-                                <span className={user.status === 'Active' ? 'status-active' : 'status-inactive'}>{user.status}</span>
-                            </td>
-                            <td>
-                                <button className="btn-action btn-edit" onClick={() => alert('Edit feature not yet implemented.')}>Edit</button>
-                                {user.status === 'Active' ? 
-                                    <button className="btn-action btn-deactivate" onClick={() => handleToggleStatus(user)}>Deactivate</button> : 
-                                    <button className="btn-action btn-activate" onClick={() => handleToggleStatus(user)}>Activate</button>
-                                }
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            )}
+            <div className="dashboard-header-section">
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <div>
+                        <h2 className="dashboard-title">User Management</h2>
+                        <p className="dashboard-subtitle">Manage system users, roles, and permissions</p>
+                    </div>
+                    <button className="action-btn action-primary" style={{width: 'auto', padding: '0.75rem 2rem'}} onClick={() => setShowCreateModal(true)}>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width: '20px', height: '20px'}}>
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/>
+                        </svg>
+                        <span>Create New User</span>
+                    </button>
+                </div>
+            </div>
+
+            <div className="dashboard-section">
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem'}}>
+                    <h3 className="section-title" style={{margin: 0}}>System Users ({users.length})</h3>
+                </div>
+                
+                {loading ? (
+                    <div className="loading-state">
+                        <div className="spinner-large"></div>
+                        <p>Loading users...</p>
+                    </div>
+                ) : (
+                    <div className="modern-table-container">
+                        <table className="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>USERNAME</th>
+                                    <th>ROLE</th>
+                                    <th>STATUS</th>
+                                    <th>ACTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {users.map(user => (
+                                    <tr key={user._id}>
+                                        <td>
+                                            <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
+                                                <div style={{width: '40px', height: '40px', borderRadius: '50%', background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '600'}}>
+                                                    {user.username.charAt(0).toUpperCase()}
+                                                </div>
+                                                <span style={{fontWeight: '600', color: '#1e293b'}}>{user.username}</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span className={`role-badge role-${user.role.toLowerCase()}`}>{user.role}</span>
+                                        </td>
+                                        <td>
+                                            <span className={user.status === 'Active' ? 'status-badge status-active' : 'status-badge status-inactive'}>
+                                                {user.status === 'Active' ? '● Active' : '● Inactive'}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div style={{display: 'flex', gap: '0.5rem'}}>
+                                                {user.status === 'Active' ? 
+                                                    <button className="table-btn btn-danger" onClick={() => handleToggleStatus(user)}>Deactivate</button> : 
+                                                    <button className="table-btn btn-success" onClick={() => handleToggleStatus(user)}>Activate</button>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

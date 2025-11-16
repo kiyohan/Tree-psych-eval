@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Backend Service
+  backend:
+    build: ./backend
+    container_name: tree-psych-backend-prod
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=production
+      - PORT=5001
+      - MONGO_URI=${MONGO_URI}
+      - JWT_SECRET=${JWT_SECRET}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      - ML_API_ENDPOINT=http://ml-api:5002/ml/analyze-drawing
+    depends_on:
+      - ml-api
+    networks:
+      - tree-psych-network
+    restart: always
+
+  # Frontend Service (Production Build with Nginx)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    container_name: tree-psych-frontend-prod
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - tree-psych-network
+    restart: always
+
+  # ML API Service
+  ml-api:
+    build: ./ml-api
+    container_name: tree-psych-ml-api-prod
+    ports:
+      - "5002:5002"
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    networks:
+      - tree-psych-network
+    volumes:
+      - /home/akmal-ali/miniconda3:/home/akmal-ali/miniconda3:ro
+    restart: always
+
+networks:
+  tree-psych-network:
+    driver: bridge

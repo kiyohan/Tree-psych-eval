@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # Backend Service
+  backend:
+    build: ./backend
+    container_name: tree-psych-backend
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=development
+      - PORT=5001
+      - MONGO_URI=${MONGO_URI}
+      - JWT_SECRET=${JWT_SECRET}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      - ML_API_ENDPOINT=http://ml-api:5002/ml/analyze-drawing
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    depends_on:
+      - ml-api
+    networks:
+      - tree-psych-network
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    restart: unless-stopped
+
+  # Frontend Service
+  frontend:
+    build: ./frontend
+    container_name: tree-psych-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5001
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+    networks:
+      - tree-psych-network
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+
+  # ML API Service
+  ml-api:
+    build: ./ml-api
+    container_name: tree-psych-ml-api
+    ports:
+      - "5002:5002"
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    networks:
+      - tree-psych-network
+    volumes:
+      - ./ml-api:/app
+      - /home/akmal-ali/miniconda3:/home/akmal-ali/miniconda3:ro
+    restart: unless-stopped
+
+networks:
+  tree-psych-network:
+    driver: bridge

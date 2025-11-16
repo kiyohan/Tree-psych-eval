@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 import ProtectedRoute from './components/ProtectedRoute';
@@ -39,33 +39,47 @@ function Navigation() {
   );
 }
 
+function AppContent() {
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/login';
+  const isAdminPage = location.pathname === '/admin';
+  const isUploaderPage = location.pathname === '/uploader';
+  const isAssessorPage = location.pathname === '/assessor';
+  const isDashboardPage = isAdminPage || isUploaderPage || isAssessorPage;
+
+  return (
+    <>
+      {!isLoginPage && !isDashboardPage && <Navigation />}
+      <div className={isLoginPage || isDashboardPage ? '' : 'container mt-4'}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/admin" element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/assessor" element={
+            <ProtectedRoute allowedRoles={['Assessor']}>
+              <AssessorDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/uploader" element={
+            <ProtectedRoute allowedRoles={['Uploader']}>
+              <UploaderDashboard />
+            </ProtectedRoute>
+          } />
+        </Routes>
+      </div>
+    </>
+  );
+}
+
 function App() {
   return (
     <Router>
       <AuthProvider>
-        <Navigation />
-        <div className="container mt-4">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-
-            <Route path="/admin" element={
-              <ProtectedRoute allowedRoles={['Admin']}>
-                <AdminDashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="/assessor" element={
-              <ProtectedRoute allowedRoles={['Assessor']}>
-                <AssessorDashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="/uploader" element={
-              <ProtectedRoute allowedRoles={['Uploader']}>
-                <UploaderDashboard />
-              </ProtectedRoute>
-            } />
-          </Routes>
-        </div>
+        <AppContent />
       </AuthProvider>
     </Router>
   );
