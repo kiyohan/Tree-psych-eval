@@ -72,83 +72,172 @@ val_transform = transforms.Compose([
     transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD)
 ])
 
-# --- 3. DEFINE THE RAG KNOWLEDGE BASE ---
-RAG_CONTEXT = """
-- ANIMAL PEEKING FROM HOLE IN TREE • Feeling that segment of personality is pathoformically free from control and presumably has destructive potentialities; obsessive guilt. • Children often identify with an animal, thus depicting regressive yearnings for withdrawn, warm, protecting uterine existence.
-- APPLE TREE • Frequently drawn by dependent children. • Pregnant women or those desiring children often draw apple trees.
-- APPLES, FALLING OR FALLEN • Indicates child's feeling of rejection.
-- BARK Depicted by vine-like vertical lines well separated • Suggests schizoid characteristics.
-- BARK Easily drawn • Well-balanced interaction.
-- BARK Inconsistently or heavily drawn • Anxiety.
-- BARK Meticulously drawn • Compulsiveness with overconcern about relationships with environment.
-- BRANCHES • Degree of flexibility of branches, number, size, and extent of interrelationship indicate view of adaptability and availability for deriving satisfactions in environment.
-- BRANCHES Absolute symmetry of • Implies feelings of ambivalence; inability to grant dominance to emotional or intellectual course of action.
-- BRANCHES Broken, bent, or dead • Significant psychic or physical trauma. • Castration feelings: psychosexual or psychosocial.
-- BRANCHES Indicated by shaded implication • When easily and quickly drawn, indicative of tactful but possibly superficial interaction.
-- BRANCHES Indicated by unshaded implication • Oppositional tendencies.
-- BRANCHES Intended to be two dimensional but not "closed" at distal end • Little control over expression of drives.
-- BRANCHES New growth protruding from barren trunk • Reversal of crippling belief that seeking satisfaction from environment was fruitless. • Probably sexual rejuvenation, if history of impotence exists.
-- BRANCHES One-dimensional, not forming a system and inadequately joined to a one-dimensional trunk • Organicity. • Impotence feelings, futility, lack of ego strength with poor integration of satisfaction-seeking resources.
-- BRANCHES One- or two-dimensional, turning inward • Strong intratensive ruminative tendencies.
-- BRANCHES Overemphasis to left • Personality imbalance due to tendency to seek strenuously for immediate, frank emotional satisfaction: extratensivity.
-- BRANCHES Overemphasis to right • Personality imbalance produced by strong tendency to avoid or delay emotional satisfaction, or seek satisfaction through intellectual effort.
-- BRANCHES Phallic-like • Sexual preoccupations. • Strivings for virility.
-- BRANCHES Spike-like • Subconscious castration fear. • Masochistic tendencies if point is at trunk end of branch.
-- BRANCHES Two-dimensional, drawn like clubs or fingers with little organization • Strong hostility and aggression. • If not overtly aggressive, hostility is repressed with considerable inner tension created.
-- BRANCHES Two-dimensional, partially drawn with relatively refined branch system and foliage by implication • Implies well-developed ability to deal successfully with people, as in social work.
-- BRANCHES "Wrapped" at ends in cloud-like balls • Inhibitions prevent outward discharge of aggression.
-- BRANCH STRUCTURE Abruptly flattened at top • Attempt to reject or deny painful fantasy life.
-- BRANCH STRUCTURE Overly large in relation to trunk • Feeling of basic inadequacy with concomitant overstriving to secure satisfaction from environment.
-- BRANCH STRUCTURE Tall and narrow • Tendency to fear seeking satisfaction from and in environment.
-- DETAILS, ESSENTIAL • Trunk and one branch may be regarded as normal when the drawing is identified as a stump.
-- GROUND, TRANSPARENCIY OF, ROOTS SHOWN BELOW SURFACE • Pathoformic reality flaw. • Suggestive of organicity.
-- GROUNDLINE, ARC-LIKE HILL • Tree upon crest of arc-like hill frequently represents oral-erotic fixation with need for maternal protection. • When Tree is small, maternal dependence with feelings of isolation and helplessness indicated.
-- LEAVES Fallen or falling • Feels losing ability to hide thoughts and feelings. • Feels losing ability for more controlled and delicate adjustments in and to environment.
-- LEAVES Many presented in detail • Obsessive-compulsive characteristics.
-- LEAVES Two-dimensional, too large for branches • Wishes to mask basic feelings of inadequacy with cloak of superficial adjustment. • Overcompensatory attempt to take flight into reality.
-- PERSPECTIVE Below subject • Defeatist attitude. • Tendency toward concretivity. • Rejection of person represented by Tree.
-- PERSPECTIVE Partly up a hill • Feelings of striving. • Need for shelter and security.
-- PERSPECTIVE Top of hill, by itself • Sometimes indicates feeling of superiority. • Sometimes represents feeling of isolation, concomitant with struggle for autonomy.
-- ROOTS Dead • Intrapersonal imbalance or dissolution with suggested pathoformic loss of drive and grasp of reality. • Obsessive-depressive feelings associated with early life.
-- ROOTS Entering ground, overemphasis upon • Great need to maintain grasp of reality. • Insecurity.
-- ROOTS Talon-like, not penetrating ground surface • Poor reality contact. • Paranoid aggressive attitudes suggested.
-- ROOTS Thin-lined, making tenuous contact with ground • Poor reality contact.
-- ROOTS Transparent from underground • Impairment of reality awareness. • Organicity, particularly in children.
-- SCARS • Psychic and/or physical experience regarded traumatically.
-- SHADOW • Anxiety-binding factor within conscious level of personality. • Unsatisfying relationship of psychological past with psychological present.
-- SUN Large • Acute awareness of relationship to authority figure.
-- SUN Location of • Relationship of Tree to source of warmth and/or power. • Frequently symbolizes relationship felt between the subject and dominant environmental figure.
-- SUN Setting • Feelings of depression.
-- TREE Drawn as two one-dimensional trees • Strongly suggests pathologic dichotomy of affect and intellect. • Organicity suspected.
-- TREE "Keyhole" • Strong hostile impulses. • Somewhat rigid personality, with much potential for explosive behavior.
-- TREE Large but contained within page • Acutely aware of self in environment. • Likely to attempt to secure satisfaction in activity rather than fantasy.
-- TREE Leaning to left • Imbalance of personality because of desire to secure frank, immediate, emotional satisfaction in behaving impulsively. • Fixation on past and/or fear of future.
-- TREE Leaning to right • Imbalance of personality due to fear of frank, emotional expression with concomitant overemphasis upon intellectual satisfactions. • Fixation on future and/or desire to forget unhappy past.
-- TREE "Phallic" • Common for children under 8 years. • Suggests psychosexual immaturity and/or phallic preoccupations.
-- TREE Small • Feels inferior and inadequate. • Desire to withdraw.
-- TRUNK Broad at base with rapid diminishing of breadth • Early environment lacking in warmth and healthful stimulation with resultant cramping effect on personality maturation.
-- TRUNK Broken and tip of tree touching ground • Symbolically expresses feeling of having been overwhelmed by internal or external forces beyond control.
-- TRUNK Dead • Feels crippling loss of ego control.
-- TRUNK Faint lines • Feeling of lack of ego strength, indecision and inadequacy, accompanied by anxiety.
-- TRUNK Large, with small branch structure • Precarious personality balance because of frustration engendered by inability to satisfy strong basic needs. • Emotional immaturity or egocentricity.
-- TRUNK Leaning to left and then to right • Tendency at early age to regress and behave impulsively and at later age to overcompensate by strong controls and fixation on future.
-- TRUNK Narrower at base than at higher points • Striving beyond the subject's strength with concomitant implications of possible collapse of ego control.
-- TRUNK One-dimensional, with one-dimensional branches that do not form a system • Organic state suspected. • Feelings of impotence, futility, and lack of ego strength.
-- TRUNK Overly large • Feelings of environmental constriction with tendency to react aggressively in reality or fantasy.
-- TRUNK Reinforcement of peripheral lines • Need to maintain control or personality intactness. • Employs compensatory defenses to cloak and combat fear of personality diffusion.
-- TRUNK Tiny • Feelings of basic inadequacy and ineptness.
-- TRUNK Truncated with tiny branches growing from stump • Core of self felt to be damaged. • Stunted growth with renewed efforts or hope for regrowth.
-- TRGUNK Two-dimensional, with one-dimensional branches • Good early development but later interference by serious traumatic events.
-- TRUNK Very slender, with large branch structures • Precarious personality balance because of over-striving for satisfaction.
-- WIND Blowing from ground level to tree-top • Compulsive need to escape reality and enter fantasy.
-- WIND Blowing from subject • Desire to deny feelings of pressure. • Desire to aggress against sources of frustration.
-- WIND Blowing from top to bottom • Compulsive need to escape fantasy and return to reality.
-- WIND Blowing from Tree toward subject • Narcissistic tendency; for example, wishes or feels control over person the Tree represents.
-- WIND Blowing in all directions simultaneously • Suggestive of acute reality testing failure.
-"""
-print("RAG context defined.")
+# --- 3. LOAD RAG KNOWLEDGE BASE FROM FILE ---
+KNOWLEDGE_FILE = os.getenv('KNOWLEDGE_FILE', 'knowledge_base.txt')
+RAG_CONTEXT = ""  # Will be populated from file
 
-# --- 4. FLASK API ENDPOINT ---
+def load_knowledge_file(path):
+    """Load knowledge base from external file."""
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            data = f.read()
+        if data.strip():
+            print(f"✅ Loaded RAG knowledge from file: {path} ({len(data)} chars)")
+            return data
+        else:
+            print(f"ERROR: Knowledge file {path} is empty.")
+            return ""
+    except FileNotFoundError:
+        print(f"ERROR: Knowledge file not found at {path}. Please create it.")
+        return ""
+    except Exception as e:
+        print(f"ERROR reading knowledge file {path}: {e}")
+        return ""
+
+# Load knowledge base from file
+RAG_CONTEXT = load_knowledge_file(KNOWLEDGE_FILE)
+if not RAG_CONTEXT:
+    print("⚠️ WARNING: No knowledge base loaded. RAG pipeline will not work properly.")
+
+
+# --- 4. RAG PIPELINE: EMBEDDING & RETRIEVAL ---
+VECTOR_STORE = []  # Will store {'text': str, 'embedding': list}
+
+def embed_text(text, model="models/text-embedding-004"):
+    """Convert text into embedding vector using Gemini."""
+    try:
+        result = genai.embed_content(
+            model=model,
+            content=text,
+            task_type="retrieval_document"
+        )
+        return result['embedding']
+    except Exception as e:
+        print(f"Embed error (text): {e}")
+        return None
+
+def embed_query(text, model="models/text-embedding-004"):
+    """Convert query text into embedding vector."""
+    try:
+        result = genai.embed_content(
+            model=model,
+            content=text,
+            task_type="retrieval_query"
+        )
+        return result['embedding']
+    except Exception as e:
+        print(f"Embed error (query): {e}")
+        return None
+
+def build_vector_store_from_rag(rag_text):
+    """Split RAG text into chunks and create embeddings."""
+    global VECTOR_STORE
+    VECTOR_STORE = []
+    
+    if not rag_text:
+        print("No RAG text provided to build vector store.")
+        return
+    
+    # Split into chunks by bullet points and sub-bullets
+    knowledge_chunks = []
+    for item in rag_text.split('\n- '):
+        item = item.strip()
+        if not item:
+            continue
+        
+        if '•' in item:
+            # Parse main feature and interpretations
+            parts = item.split(' • ')
+            title = parts[0].strip()
+            for text in parts[1:]:
+                if text.strip():
+                    knowledge_chunks.append(f"{title}: {text.strip()}")
+        else:
+            knowledge_chunks.append(item)
+    
+    print(f"Building vector store with {len(knowledge_chunks)} chunks...")
+    
+    for chunk in knowledge_chunks:
+        emb = embed_text(chunk)
+        if emb:
+            VECTOR_STORE.append({'text': chunk, 'embedding': emb})
+    
+    print(f"✅ Vector store built with {len(VECTOR_STORE)} embeddings.")
+
+def cosine_similarity(a, b):
+    """Compute cosine similarity between two vectors."""
+    try:
+        dot_product = sum(x * y for x, y in zip(a, b))
+        norm_a = sum(x * x for x in a) ** 0.5
+        norm_b = sum(y * y for y in b) ** 0.5
+        if norm_a == 0 or norm_b == 0:
+            return 0.0
+        return dot_product / (norm_a * norm_b)
+    except Exception:
+        return 0.0
+
+def retrieve_relevant_context(detected_features, top_k=5):
+    """Retrieve top_k most relevant knowledge chunks for detected features."""
+    if not VECTOR_STORE:
+        print("Vector store empty; returning full RAG_CONTEXT as fallback.")
+        return RAG_CONTEXT
+    
+    # Create query from detected features
+    query_text = ", ".join(detected_features) if isinstance(detected_features, list) else str(detected_features)
+    query_embedding = embed_query(query_text)
+    
+    if not query_embedding:
+        print("Failed to compute query embedding; returning full RAG_CONTEXT as fallback.")
+        return RAG_CONTEXT
+    
+    # Compute similarity scores
+    scores = []
+    for item in VECTOR_STORE:
+        score = cosine_similarity(query_embedding, item['embedding'])
+        scores.append((score, item['text']))
+    
+    # Sort by score and get top_k
+    scores.sort(key=lambda x: x[0], reverse=True)
+    top_chunks = [text for score, text in scores[:top_k]]
+    
+    return "\n- ".join(top_chunks)
+
+def generate_gemini_report_RAG(detected_features, retrieved_context):
+    """Generate psychological interpretation using only retrieved context."""
+    if not gemini_model:
+        return "LLM not configured."
+    
+    system_prompt = (
+        "You are an expert clinical psychologist specializing in the HTP (House-Tree-Person) "
+        "projective test. Your task is to interpret observed features from a tree drawing using "
+        "ONLY the provided relevant knowledge base. Be clinical, objective, and concise. "
+        "Do not add preamble or conclusions."
+    )
+    
+    user_prompt = (
+        f"--- RELEVANT KNOWLEDGE ---\n{retrieved_context}\n--- END KNOWLEDGE ---\n\n"
+        f"A vision model detected the following visual features: {detected_features}\n\n"
+        f"Psychological Interpretation:"
+    )
+    
+    full_prompt = f"{system_prompt}\n\n{user_prompt}"
+    
+    try:
+        response = gemini_model.generate_content(full_prompt)
+        return response.text.strip()
+    except Exception as e:
+        print(f"Gemini generation error: {e}")
+        return f"LLM generation failed: {e}"
+
+# Build vector store at startup if Gemini is configured
+if gemini_model is not None:
+    try:
+        build_vector_store_from_rag(RAG_CONTEXT)
+    except Exception as e:
+        print(f"Failed to build vector store at startup: {e}")
+
+
+# --- 5. FLASK API ENDPOINT ---
 
 @app.route('/ml/analyze-drawing', methods=['POST'])
 def analyze_drawing_endpoint():
@@ -180,27 +269,20 @@ def analyze_drawing_endpoint():
 
     predicted_labels = [LABEL_NAMES[i] for i, pred in enumerate(preds) if pred == 1]
 
-    # --- STAGE 2: "INTERPRETER" (GEMINI) GENERATION ---
+    # --- STAGE 2: RAG RETRIEVAL ---
     is_flagged = len(predicted_labels) > 0
     final_analysis = "The 'Seer' model detected no specific features."
 
     if is_flagged:
         try:
-            # Create the prompt for Gemini
-            prompt = (
-                f"You are an expert clinical psychologist specializing in the HTP projective test. "
-                f"Your task is to interpret a list of observed features from a tree drawing based on a provided knowledge base. "
-                f"Semantically match the detected features to the *closest* concepts in the knowledge base and provide a concise, objective interpretation. "
-                f"Do not add any preamble or conclusion. Just provide the direct interpretation.\n\n"
-                f"--- KNOWLEDGE BASE ---\n{RAG_CONTEXT}\n--- END KNOWLEDGE BASE ---\n\n"
-                f"A vision model detected the following raw visual features: {predicted_labels}\n\n"
-                f"Psychological Interpretation:"
-            )
-
-            response = gemini_model.generate_content(prompt)
-            final_analysis = response.text.strip()
+            # Retrieve relevant context using RAG pipeline
+            print(f"Retrieving relevant context for: {predicted_labels}")
+            retrieved_context = retrieve_relevant_context(predicted_labels, top_k=5)
+            
+            # Generate interpretation using only retrieved context
+            final_analysis = generate_gemini_report_RAG(predicted_labels, retrieved_context)
         except Exception as e:
-            print(f"🔥 Gemini API call failed: {e}")
+            print(f"🔥 RAG pipeline failed: {e}")
             final_analysis = f"LLM analysis failed. Raw features detected: {predicted_labels}"
 
 
@@ -219,7 +301,7 @@ def analyze_drawing_endpoint():
                 "confidence": 0.85 # Mock confidence for the LLM part
             }
         ],
-        "modelVersion": "seer-efficientnet-b0_interpreter-gemini-pro-v1.0"
+        "modelVersion": "seer-efficientnet-b0_rag-retrieval_gemini-flash-v1.0"
     }
 
     return jsonify(response_payload)
